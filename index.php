@@ -1,10 +1,12 @@
 <?php
 
+include_once("init.php");
+
 $ch = curl_init();
 
 $postData = array(
     'session_token' => $_GET['session_token'],
-    'api_key' => "__INSERT_API_TOKEN__",
+    'api_key' => $ini['api_key'],
 );
 
 
@@ -17,12 +19,14 @@ $server_output = json_decode(curl_exec($ch));
 
 curl_close($ch);
 
-if ($server_output->level == 0) {
-    echo "No access";
-} else if ($server_output->level == 1) {
-    echo "Normal access";
-} else if ($server_output->level == 2) {
-    echo "Admin access";
+// Standard Access                  Admin Access
+if ($server_output->level == 1 || $server_output->level == 2) {
+    $_SESSION['token'] = $_GET['session_token'];
+    $_SESSION['level'] = $server_output->level;
+    $_SESSION['name'] = $server_output->name;
+    header("Location: dashboard.php");
+    die();
 } else {
-    echo "Error";
+    http_response_code(500);
+    exit("Invalid information provided");
 }
