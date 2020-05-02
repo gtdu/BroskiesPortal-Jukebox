@@ -8,15 +8,16 @@ if ($_SESSION['level'] == 0 || $_SESSION['level'] > 2) {
 
 $handle = $config['dbo']->prepare('SELECT * FROM playlists ORDER BY name');
 $handle->execute();
-$playlists = $handle->fetchAll(\PDO::FETCH_ASSOC);
+$playlists = $handle->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 <!doctype html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title></title>
 </head>
 
 <body>
@@ -35,13 +36,13 @@ $playlists = $handle->fetchAll(\PDO::FETCH_ASSOC);
 
     <form method="post" action="results.php">
         <div class="form-group">
-            <label for="exampleInputEmail1">Track Name</label>
-            <input type="text" class="form-control" name="track" placeholder="Cocaine Jesus">
-            <small id="emailHelp" class="form-text text-muted">Search using Spotify</small>
+            <label for="emailHelp">Track Name</label>
+            <input id="emailHelp" type="text" class="form-control" name="track" placeholder="Cocaine Jesus">
+            <small class="form-text text-muted">Search using Spotify</small>
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1">Playlist</label>
-            <select class="form-control" name="playlist">
+            <select id="exampleInputEmail1" class="form-control" name="playlist">
                 <?php
                 foreach ($playlists as $row) {
                     echo "<option value='" . $row['id'] . "'>" . $row['name'] . "</option>";

@@ -14,15 +14,15 @@ if (!empty($_POST)) {
 
 $handle = $config['dbo']->prepare('SELECT recommendations.id, title, artwork, artist, preview_url, name FROM recommendations, playlists WHERE playlistID = playlists.id ORDER BY name, title');
 $handle->execute();
-$data = $handle->fetchAll(\PDO::FETCH_ASSOC);
+$data = $handle->fetchAll(PDO::FETCH_ASSOC);
 
 $handle = $config['dbo']->prepare('SELECT * FROM playlists ORDER BY name');
 $handle->execute();
-$playlists = $handle->fetchAll(\PDO::FETCH_ASSOC);
+$playlists = $handle->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 <!doctype html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,6 +32,7 @@ $playlists = $handle->fetchAll(\PDO::FETCH_ASSOC);
     }
     </style>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title></title>
 </head>
 
 <body>
@@ -56,7 +57,7 @@ $playlists = $handle->fetchAll(\PDO::FETCH_ASSOC);
         foreach ($data as $track) {
             echo "<tr>";
             echo "<th>" . $track['name'] . "</th>";
-            echo "<td><img src='" . $track['artwork'] . "'></td>";
+            echo "<td><img src='" . $track['artwork'] . "' alt=''></td>";
             echo "<td>" . $track['title'] . "</td>";
             echo "<td>" . $track['artist'] . "</td>";
             echo "<td><iframe src='" . $track['preview_url'] . "'></iframe></td>";
@@ -71,8 +72,8 @@ $playlists = $handle->fetchAll(\PDO::FETCH_ASSOC);
     <div class="collapse" id="collapseExample">
         <form method="post">
             <div class="form-group">
-                <label>Playlist Name</label>
-                <input type="text" class="form-control" name="name" placeholder="Tailgates">
+                <label for="playlistName">Playlist Name</label>
+                <input id="playlistName" type="text" class="form-control" name="name" placeholder="Tailgates">
             </div>
             <button type="submit" class="btn btn-primary mb-2">Submit</button>
         </form>
